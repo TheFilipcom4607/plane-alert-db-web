@@ -1,0 +1,36 @@
+#!/command/with-contenv bash
+#shellcheck shell=bash disable=SC1091
+
+# Keeps a local copy of the plane-alert-db CSVs so visitors never hit GitHub.
+# Every UPDATE_INTERVAL it asks GitHub for the latest commit on main and only
+# downloads the files when that commit changed.
+
+source /scripts/common
+
+REPO="sdr-enthusiasts/plane-alert-db"
+DATA="/run/plane-alert-db"
+FILES=(plane-alert-db.csv plane_images.csv)
+
+mkdir -p "$DATA"
+
+while true; do
+    sha="$(curl -fsS -H 'Accept: application/vnd.github.sha' "https://api.github.com/repos/$REPO/commits/main")"
+    if [[ -n "$sha" && "$sha" != "$(cat "$DATA/sha" 2>/dev/null)" ]]; then
+        "${s6wrap[@]}" echo "New commit $sha, downloading"
+        tmp="$(mktemp -d "$DATA/.new.XXXXXX")"  # same filesystem, so mv is atomic
+        ok=true
+        for f in "${FILES[@]}"; do
+            curl -fsS -o "$tmp/$f" "https://raw.githubusercontent.com/$REPO/$sha/$f" || ok=false
+        done
+        if $ok; then
+            mv "$tmp"/* "$DATA"/
+            echo "$sha" > "$DATA/sha"
+            printf '{"sha":"%s","fetched":"%s"}\n' "$sha" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$DATA/version.json"
+        else
+            "${s6wrap[@]}" echo "Download failed, keeping the old copy"
+        fi
+        rm -rf "$tmp"
+    fi
+    # No data yet (e.g. network not up at boot): retry soon instead of in hours.
+    if [[ -f "$DATA/sha" ]]; then sleep "${UPDATE_INTERVAL:-3h}"; else sleep 60; fi
+done

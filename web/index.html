@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>plane-alert-db search</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>plane-alert-db search</h1>
+  <p class="intro">
+    Search the <a href="https://github.com/sdr-enthusiasts/plane-alert-db">plane-alert-db</a> list of interesting aircraft.
+    Click a row for photos. Something missing or wrong?
+    <a href="https://github.com/sdr-enthusiasts/plane-alert-db#contributing">Add or fix an aircraft on GitHub</a>.
+  </p>
+
+  <form id="form">
+    <input type="search" id="q" placeholder="Hex, registration, operator, type, tag..." autofocus>
+    <select id="cat"><option value="">All categories</option></select>
+  </form>
+
+  <p id="status">Loading...</p>
+
+  <div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Hex</th><th>Registration</th><th>Operator</th><th>Type</th><th>ICAO type</th><th>CMPG</th><th>Tags</th><th>Category</th><th></th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  </div>
+  <button id="more" hidden></button>
+
+  <footer>
+    <span id="version"></span>
+    <span>Made by <a href="https://github.com/TheFilipcom4607">TheFilip</a></span>
+  </footer>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

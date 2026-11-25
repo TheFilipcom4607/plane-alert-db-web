@@ -1,0 +1,125 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1c1f23;
+  --muted: #6a717b;
+  --border: #e3e6ea;
+  --surface: #f6f7f9;
+  --accent: #1f6feb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111417;
+    --fg: #e4e6e9;
+    --muted: #8d949e;
+    --border: #2a2f35;
+    --surface: #181c20;
+    --accent: #5b9cf5;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main { max-width: 1200px; margin: 0 auto; padding: 32px 16px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1 { font-size: 1.6rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+.intro { color: var(--muted); margin: 0 0 24px; max-width: 70ch; }
+
+form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+input, select, button {
+  font: inherit;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+input { flex: 1; min-width: 220px; }
+select {
+  flex: 0 1 220px;
+  min-width: 0;
+  /* own arrow: the native one ignores padding and sits on the edge */
+  appearance: none;
+  padding-right: 36px;
+  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a919b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 16px;
+}
+input:focus, select:focus, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+button { cursor: pointer; background: var(--surface); }
+button:hover { border-color: var(--muted); }
+
+#status { color: var(--muted); font-size: 0.9em; margin: 0 0 8px; }
+
+.scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 8px 12px; vertical-align: top; }
+th {
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 700px) {
+  td { white-space: nowrap; }  /* one line per aircraft, scroll sideways */
+}
+tbody tr { border-top: 1px solid var(--border); }
+tbody tr:first-child { border-top: 0; }
+tbody tr:not(.detail) { cursor: pointer; }
+tbody tr:not(.detail):hover { background: var(--surface); }
+
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+.tags { color: var(--muted); }
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.edit { color: var(--muted); display: inline-flex; padding: 2px; border-radius: 4px; }
+.edit:hover { color: var(--accent); }
+.edit svg { width: 16px; height: 16px; }
+
+tr.detail > td { background: var(--surface); padding: 12px; }
+.photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.photos img { display: block; height: 160px; border-radius: 6px; }
+.detail p { margin: 10px 0 0; font-size: 0.9em; }
+.none { color: var(--muted); }
+
+#more { margin-top: 12px; }
+
+footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}

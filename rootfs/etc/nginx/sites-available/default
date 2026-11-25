@@ -1,0 +1,22 @@
+server {
+    listen 80 default_server;
+
+    root /var/www/html;
+    index index.html;
+
+    access_log off;
+    error_log /dev/stderr;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json text/csv;
+
+    # Local copy of the CSVs, kept up to date by the update-db service
+    location /data/ {
+        alias /run/plane-alert-db/;
+        types {
+            text/csv csv;
+            application/json json;
+        }
+        add_header Cache-Control "no-cache";
+    }
+}

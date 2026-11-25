@@ -1,0 +1,11 @@
+services:
+  plane-alert-db-web:
+    image: ghcr.io/thefilipcom4607/plane-alert-db-web:latest
+    container_name: plane-alert-db-web
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      - UPDATE_INTERVAL=3h
+    tmpfs:
+      - /run:exec,size=64M
