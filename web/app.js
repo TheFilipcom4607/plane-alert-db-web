@@ -118,8 +118,10 @@ function detail(p) {
 async function load() {
   try {
     const v = await (await fetch('data/version.json')).json();
-    document.getElementById('version').textContent =
-      `Data from commit ${v.sha.slice(0, 7)}, fetched ${new Date(v.fetched).toLocaleString()}.`;
+    const dataCommit = document.getElementById('data-commit');
+    dataCommit.textContent = v.sha.slice(0, 7);
+    dataCommit.href = `${GITHUB}/commit/${v.sha}`;
+    document.getElementById('fetched').textContent = `Data fetched ${new Date(v.fetched).toLocaleString()}`;
 
     const [db, img] = await Promise.all(['plane-alert-db.csv', 'plane_images.csv'].map(f =>
       fetch(`data/${f}`).then(r => { if (!r.ok) throw new Error(`${f}: ${r.status}`); return r.text(); })));

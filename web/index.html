@@ -8,12 +8,22 @@
 </head>
 <body>
 <main>
-  <h1>plane-alert-db search</h1>
-  <p class="intro">
-    Search the <a href="https://github.com/sdr-enthusiasts/plane-alert-db">plane-alert-db</a> list of interesting aircraft.
-    Click a row for photos. Something missing or wrong?
-    <a href="https://github.com/sdr-enthusiasts/plane-alert-db#contributing">Add or fix an aircraft on GitHub</a>.
-  </p>
+  <header>
+    <div>
+      <h1>plane-alert-db search</h1>
+      <p class="intro">
+        Search the <a href="https://github.com/sdr-enthusiasts/plane-alert-db">plane-alert-db</a> list of interesting aircraft.
+        Click a row for photos. Something missing or wrong?
+        <a href="https://github.com/sdr-enthusiasts/plane-alert-db#contributing">Add or fix an aircraft on GitHub</a>.
+      </p>
+    </div>
+    <p class="meta">
+      Made by <a href="https://github.com/TheFilipcom4607">TheFilip</a><br>
+      Web UI <a href="https://github.com/TheFilipcom4607/plane-alert-db-web/commit/__COMMIT__">__COMMIT__</a>
+      · Data <a id="data-commit">...</a><br>
+      <span id="fetched"></span>
+    </p>
+  </header>
 
   <form id="form">
     <input type="search" id="q" placeholder="Hex, registration, operator, type, tag..." autofocus>
@@ -31,11 +41,6 @@
   </table>
   </div>
   <button id="more" hidden></button>
-
-  <footer>
-    <span id="version"></span>
-    <span>Made by <a href="https://github.com/TheFilipcom4607">TheFilip</a></span>
-  </footer>
 </main>
 
 <script src="app.js"></script>

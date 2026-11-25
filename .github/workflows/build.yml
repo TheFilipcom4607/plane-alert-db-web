@@ -27,3 +27,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/thefilipcom4607/plane-alert-db-web:latest
+          build-args: COMMIT=${{ github.sha }}

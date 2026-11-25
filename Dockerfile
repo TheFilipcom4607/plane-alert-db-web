@@ -8,4 +8,8 @@ RUN rm -rf /var/www/html/*
 COPY rootfs/ /
 COPY web/ /var/www/html/
 
+# Show which commit of this repo the page was built from (set by the GitHub workflow)
+ARG COMMIT=dev
+RUN sed -i "s/__COMMIT__/$(echo "$COMMIT" | cut -c1-7)/g" /var/www/html/index.html
+
 EXPOSE 80

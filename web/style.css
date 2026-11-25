@@ -33,8 +33,20 @@ main { max-width: 1200px; margin: 0 auto; padding: 32px 16px; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 32px;
+  margin-bottom: 24px;
+}
 h1 { font-size: 1.6rem; margin: 0 0 4px; letter-spacing: -0.01em; }
-.intro { color: var(--muted); margin: 0 0 24px; max-width: 70ch; }
+.intro { color: var(--muted); margin: 0; max-width: 70ch; }
+.meta { color: var(--muted); font-size: 0.85em; margin: 0; text-align: right; }
+@media (max-width: 700px) {
+  .meta { text-align: left; }
+}
 
 form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 input, select, button {
@@ -110,16 +122,4 @@ tr.detail > td { background: var(--surface); padding: 12px; }
 .detail p { margin: 10px 0 0; font-size: 0.9em; }
 .none { color: var(--muted); }
 
-#more { margin-top: 12px; }
-
-footer {
-  margin-top: 32px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.85em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px;
-}
+#more { margin: 12px 0 32px; }
