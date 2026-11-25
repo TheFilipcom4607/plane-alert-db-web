@@ -6,6 +6,7 @@ server {
 
     access_log off;
     error_log /dev/stderr;
+    log_not_found off;  # browsers ask for /favicon.ico on every visit
 
     gzip on;
     gzip_types text/css application/javascript application/json text/csv;
