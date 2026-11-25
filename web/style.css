@@ -123,4 +123,7 @@ tr.detail > td { background: var(--surface); padding: 12px; }
 .detail p { margin: 10px 0 0; font-size: 0.9em; }
 .none { color: var(--muted); }
 
-#more { margin: 12px 0 32px; }
+#pager { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0 32px; color: var(--muted); }
+#pager[hidden] { display: none; }
+button:disabled { opacity: 0.4; cursor: default; }
+button:disabled:hover { border-color: var(--border); }

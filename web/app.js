@@ -4,13 +4,16 @@ const PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 
 let planes = [];         // { cells, line, text }
 let images = new Map();  // hex -> { urls, line }
-let showAll = false;
+let page = 0;
 
 const q = document.getElementById('q');
 const cat = document.getElementById('cat');
 const rows = document.getElementById('rows');
 const status = document.getElementById('status');
-const more = document.getElementById('more');
+const pager = document.getElementById('pager');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const pageInfo = document.getElementById('page');
 
 // Minimal CSV parser: commas, quoted fields, "" escapes.
 function parseCSV(text) {
@@ -55,14 +58,18 @@ function render() {
   const hits = planes.filter(p =>
     (!category || p.cells[9] === category) && terms.every(t => p.text.includes(t)));
 
-  const shown = showAll ? hits : hits.slice(0, LIMIT);
+  const pages = Math.max(1, Math.ceil(hits.length / LIMIT));
+  page = Math.min(page, pages - 1);
+  const shown = hits.slice(page * LIMIT, (page + 1) * LIMIT);
   rows.replaceChildren(...shown.map(row));
   status.textContent = `${hits.length} of ${planes.length} aircraft`;
   if (!hits.length) {
     status.append(' · Missing one? ', el('a', 'Add it on GitHub', { href: `${GITHUB}#contributing` }));
   }
-  more.hidden = shown.length === hits.length;
-  more.textContent = `Show all ${hits.length}`;
+  pager.hidden = pages === 1;
+  pageInfo.textContent = `Page ${page + 1} of ${pages}`;
+  prev.disabled = page === 0;
+  next.disabled = page === pages - 1;
 }
 
 function row(p) {
@@ -143,7 +150,14 @@ async function load() {
 }
 
 document.getElementById('form').addEventListener('submit', e => e.preventDefault());
-q.addEventListener('input', () => { showAll = false; render(); });
-cat.addEventListener('change', () => { showAll = false; render(); });
-more.addEventListener('click', () => { showAll = true; render(); });
+function goTo(p) {
+  page = p;
+  render();
+  document.querySelector('.scroll').scrollIntoView();
+}
+
+q.addEventListener('input', () => { page = 0; render(); });
+cat.addEventListener('change', () => { page = 0; render(); });
+prev.addEventListener('click', () => goTo(page - 1));
+next.addEventListener('click', () => goTo(page + 1));
 load();
