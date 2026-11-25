@@ -35,16 +35,17 @@ a:hover { text-decoration: underline; }
 
 header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 8px 32px;
+  gap: 32px;
   margin-bottom: 24px;
 }
+header > div { flex: 1; min-width: 0; }
 h1 { font-size: 1.6rem; margin: 0 0 4px; letter-spacing: -0.01em; }
 .intro { color: var(--muted); margin: 0; max-width: 70ch; }
-.meta { color: var(--muted); font-size: 0.85em; margin: 0; text-align: right; }
+.meta { flex: none; color: var(--muted); font-size: 0.85em; margin: 0; text-align: right; white-space: nowrap; }
 @media (max-width: 700px) {
+  header { flex-direction: column; gap: 8px; }
   .meta { text-align: left; }
 }
 
@@ -93,7 +94,7 @@ th {
   white-space: nowrap;
   border-bottom: 1px solid var(--border);
 }
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   td { white-space: nowrap; }  /* one line per aircraft, scroll sideways */
 }
 tbody tr { border-top: 1px solid var(--border); }
